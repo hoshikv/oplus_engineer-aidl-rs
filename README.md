@@ -9,6 +9,17 @@ Reverse engineered from the stock `vendor-oplus-hardware-engineer-V1-service`
 - **Transport**: HIDL/AIDL via binder (libbinder_ndk.so)
 - **Architecture**: ARM64 (aarch64), Android 35
 
+## Structure
+
+| Path | Function |
+| --- | --- |
+| `src/gen/vendor/oplus/hardware/engineer/` | Hand-written AIDL bindings matching the stock interface |
+| `src/hal.rs` | All 28 method implementations (sysfs, procfs, reserve partitions) |
+| `src/service.rs` | `BnEngineer` implementation wired to `Hal` |
+| `src/main.rs` | Process entry, `--selftest`, instance name override |
+| `aidl/` | AIDL interface definitions recovered from the device |
+| `vendor/binder_ndk`, `vendor/binder_ndk_sys` | Patched binder crates (NDK backend and bindings) |
+
 ## Implemented Methods
 
 The HAL provides these functions:
@@ -83,16 +94,6 @@ manifest. `vendor.oplus.hardware.engineer.IEngineer/default`
 The build expects the NDK paths configured in `.cargo/config.toml`. Change them if your
 NDK lives elsewhere.
 
-## Structure
-
-| Path | Purpose |
-| --- | --- |
-| `src/gen/vendor/oplus/hardware/engineer/` | Hand-written AIDL bindings matching the stock interface |
-| `src/hal.rs` | All 28 method implementations (sysfs, procfs, reserve partitions) |
-| `src/service.rs` | `BnEngineer` implementation wired to `Hal` |
-| `src/main.rs` | Process entry, `--selftest`, instance name override |
-| `aidl/` | AIDL interface definitions recovered from the device |
-| `vendor/binder_ndk`, `vendor/binder_ndk_sys` | Patched binder crates (NDK backend and bindings) |
 
 ## Deployment
 
